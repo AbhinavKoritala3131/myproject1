@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @GetMapping("/")
     public String hello() {
-        return "Hello, Spring Boot!";
+        return "Updated Code Pushed";
+    }
+    @GetMapping("/loc")
+    public String myloc() {
+        return "New API location : USA";
     }
 }

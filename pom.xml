@@ -13,6 +13,12 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.2</version> <!-- Use the latest stable -->
+        <relativePath/> <!-- Lookup from central -->
+    </parent>
 
   <dependencies>
     <dependency>
@@ -21,5 +27,25 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-devtools</artifactId>
+          <version>4.0.0-M1</version>
+      </dependency>
   </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

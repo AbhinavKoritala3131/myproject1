@@ -33,5 +33,13 @@ public class UserController {
 
 
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid  @RequestBody User updatedUser) {
+        if (updatedUser.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID Doesn't Exist");
+        }
+        return userService.update(id,updatedUser);
+
+    }
 
 }

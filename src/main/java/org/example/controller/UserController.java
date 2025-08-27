@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid  @RequestBody User user) {
         if (user.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Do not send ID while creating User");
         }

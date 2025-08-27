@@ -1,9 +1,11 @@
 package org.example.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.entity.User;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +25,16 @@ public class UserService {
     public ResponseEntity<User> update(Long id, User updatedUser) {
 
         return userRepository.findById(id).map(u -> {
-                    u.setName(updatedUser.getName());
-                    u.setEmail(updatedUser.getEmail());
-                    User savedUser = userRepository.save(u);
-                    return ResponseEntity.ok(savedUser);
+            if (updatedUser.getName()!=null){
+                    u.setName(updatedUser.getName());}
+            if (updatedUser.getEmail()!=null){
+                    u.setEmail(updatedUser.getEmail());}
+
+            User savedUser = userRepository.save(u);
+            return ResponseEntity.status(HttpStatus.OK).body(savedUser);
                 })
-                .orElse(ResponseEntity.notFound().build());
+
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + id + " not found"));
     }
 
 }

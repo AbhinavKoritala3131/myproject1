@@ -34,9 +34,15 @@ public class UserController {
 
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id,@Valid  @RequestBody User updatedUser) {
-        if (updatedUser.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID Doesn't Exist");
+    public ResponseEntity<User> updateUser(@PathVariable Long id,  @RequestBody User updatedUser) {
+//        if (updatedUser.getId() == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID is Required to update this user");
+//        }
+        if (updatedUser.getName() == null && updatedUser.getEmail() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No data provided to update.");
+        }
+        if ( updatedUser.getId()!=null && id!=updatedUser.getId()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID is not matching");
         }
         return userService.update(id,updatedUser);
 

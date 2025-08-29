@@ -3,11 +3,13 @@ package org.example.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.entity.User;
+import org.example.exception.UserNotFound;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,5 +38,17 @@ public class UserService {
 
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + id + " not found"));
     }
+    public ResponseEntity<String> del(Long id) {
+        boolean check = userRepository.existsById(id);
+        if (check) {
+            userRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("User with ID " + id + " deleted Successfully");
+        } else {
 
+            throw new UserNotFound("User with ID " + id + " not found");
+
+        }
+
+
+    }
 }

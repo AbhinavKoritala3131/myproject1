@@ -23,6 +23,7 @@ public class UserController {
     public List<User> findAll() {
         return userService.findAll();
     }
+//    GetById , DeleteById
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@Valid  @RequestBody User user) {
@@ -47,5 +48,17 @@ public class UserController {
         return userService.update(id,updatedUser);
 
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> RemoveUser(@PathVariable Long id) {
+        if ( id == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID Invalid");
 
+        } else {
+
+
+            return userService.del(id);
+
+
+        }
+    }
 }

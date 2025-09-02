@@ -18,6 +18,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/getAll")
     public List<User> findAll() {
@@ -50,15 +52,21 @@ public class UserController {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> RemoveUser(@PathVariable Long id) {
-        if ( id == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID Invalid");
+        if ( id <1) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Enter a valid ID");
 
         } else {
 
-
             return userService.del(id);
-
-
         }
+
+
     }
+//    @GetMapping("getUser/{id}")
+//    public ResponseEntity<User> getUser(@PathVariable Long id){
+//        if (id>0){
+//            return ResponseEntity.ok(userService.getUser(id));
+//        }
+//        else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Check your ID and Try again ");
+//    }
 }

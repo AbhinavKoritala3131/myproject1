@@ -2,6 +2,7 @@ package org.example.service;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.example.entity.User;
 import org.example.exception.UserNotFound;
 import org.example.repository.UserRepository;
@@ -39,16 +40,13 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + id + " not found"));
     }
     public ResponseEntity<String> del(Long id) {
-        boolean check = userRepository.existsById(id);
-        if (check) {
-            userRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("User with ID " + id + " deleted Successfully");
-        } else {
-
-            throw new UserNotFound("User with ID " + id + " not found");
-
-        }
-
+    return userRepository.findById(id).map(u -> {
+                userRepository.deleteById(id);
+                return ResponseEntity.status(HttpStatus.OK).body("User with ID " + id + " was deleted");
+            }
+    ).orElseThrow(() -> new UserNotFound("user not found with id " + id + " to delete"));
 
     }
+
+
 }

@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import jakarta.validation.Valid;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
